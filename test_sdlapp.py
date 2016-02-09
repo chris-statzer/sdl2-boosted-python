@@ -10,7 +10,9 @@ class MyApp(SDL2Application):
         self.player_y = 10
 
     def draw(self):
+        self.clear()
         self.draw_char(self.player_x, self.player_y, 1)
+        self.flip()
 
 
 app = MyApp()
@@ -20,16 +22,15 @@ app.init(1280, 720)
 while app.is_running() is True:
     app.update()
     for e in app.poll_keys():
-        if e.key == keys.KEY_ESC:
+        print e.scancode, e.keycode
+        if e.scancode == keys.KEY_ESC:
             app.quit()
-        elif e.key == keys.KEY_UP:
+        elif e.scancode == keys.KEY_UP:
             app.player_y -= 1
-        elif e.key == keys.KEY_DOWN:
+        elif e.scancode == keys.KEY_DOWN:
             app.player_y += 1
-        elif e.key == keys.KEY_LEFT:
+        elif e.scancode == keys.KEY_LEFT:
             app.player_x -= 1
-        elif e.key == keys.KEY_RIGHT:
+        elif e.scancode == keys.KEY_RIGHT:
             app.player_x += 1
-    app.clear()
     app.draw()
-    app.flip()

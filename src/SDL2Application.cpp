@@ -19,7 +19,8 @@ enum KEYS {
 
 class KeyboardEvent {
 public:
-  int key = 0;
+  int scancode;
+  std::string keycode;
 };
 
 
@@ -114,9 +115,10 @@ public:
     return running;
   }
 
-  void onKeydown(int k) {
+  void onKeydown(SDL_Scancode k) {
     KeyboardEvent key;
-    key.key = k;
+    key.scancode = k;
+    key.keycode = SDL_GetScancodeName(k);
     keyboardEvents.append(key);
   }
 };
@@ -135,7 +137,8 @@ BOOST_PYTHON_MODULE(sdlapp)
         ;
 
     class_<KeyboardEvent>("KeyboardEvent")
-        .add_property("key", &KeyboardEvent::key);
+        .add_property("scancode", &KeyboardEvent::scancode)
+        .add_property("keycode", &KeyboardEvent::keycode);
 
     class_<SDL2Application>("SDL2Application")
         .def("init", &SDL2Application::init)
